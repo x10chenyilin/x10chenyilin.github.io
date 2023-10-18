@@ -1,8 +1,9 @@
 title: carbene's Page
 logo: /assets/img/logo.png
-description: | Dept. of Engineering Physics, Tsinghua Univ.
-               Fusion engineering and plasma physics
-               Amateur astronomer
+description: |-
+             Dept. of Engineering Physics, Tsinghua Univ.
+             Fusion engineering and plasma physics
+             Amateur astronomer
 show_downloads: false
 google_analytics:
 theme: jekyll-theme-minimal
