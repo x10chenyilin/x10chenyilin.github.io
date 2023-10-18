@@ -1,6 +1,6 @@
-title: Minimal theme
+title: x10's Page
 logo: /assets/img/logo.png
-description: Minimal is a theme for GitHub Pages.
-show_downloads: true
+description: Dept. of Engineering Physics, Tsinghua Univ. / Fusion Engineering and Plasma Physics / Amateur Astronomer
+show_downloads: false
 google_analytics:
 theme: jekyll-theme-minimal
