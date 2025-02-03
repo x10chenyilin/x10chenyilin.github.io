@@ -359,7 +359,9 @@ new Vue({
                     matches.push({
                         date: match.date,
                         partner: partner,
-                        opponents: opponents,
+                        opponents: isTeam1 
+                            ? `${match.player2_1}/${match.player2_2}`
+                            : `${match.player1_1}/${match.player1_2}`,
                         score: isTeam1 ? `${match.score1}-${match.score2}` : `${match.score2}-${match.score1}`,
                         result: actual === 1 ? "胜" : "负",
                         rating: rating1,  // 添加当前积分

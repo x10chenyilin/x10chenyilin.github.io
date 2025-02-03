@@ -44,22 +44,19 @@
 
             <!-- 主数据表格 -->
             <div class="table-responsive">
-                <table class="table table-hover">
+                <table class="table text-center">
                     <thead>
                         <tr>
                             <th>排名</th>
-                            <th>选手/组合</th>
-                            <th>比赛场次</th>
+                            <th>{{ currentView === 'doubles_pair' ? '组合' : '选手' }}</th>
+                            <th>场次</th>
                             <th>胜场</th>
                             <th>胜率</th>
                             <th v-if="currentView !== 'doubles_player'">积分</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr v-for="(item, index) in sortedStats" 
-                            :key="index" 
-                            @click="showDetails(item)"
-                            style="cursor: pointer">
+                        <tr v-for="(item, index) in sortedStats" @click="showDetails(item)" style="cursor: pointer">
                             <td>{{ index + 1 }}</td>
                             <td>{{ formatName(item.name) }}</td>
                             <td>{{ item.matches }}</td>
@@ -83,7 +80,7 @@
                             <!-- 基本信息 -->
                             <div class="card mb-3">
                                 <div class="card-body">
-                                    <div class="row">
+                                    <div class="row text-center">
                                         <div class="col-md-3">
                                             <strong>总场次:</strong> {{ selectedDetails.total_matches }}
                                         </div>
@@ -114,7 +111,7 @@
                                     {{ currentView === 'doubles_player' ? '搭档统计' : '对手统计' }}
                                 </div>
                                 <div class="card-body">
-                                    <table class="table">
+                                    <table class="table text-center">
                                         <thead>
                                             <tr>
                                                 <th>{{ currentView === 'doubles_player' ? '搭档' : '对手' }}</th>
@@ -139,11 +136,12 @@
                             <div class="card">
                                 <div class="card-header">比赛记录</div>
                                 <div class="card-body">
-                                    <table class="table">
+                                    <table class="table text-center">
                                         <thead>
                                             <tr>
                                                 <th>日期</th>
-                                                <th>对手</th>
+                                                <th v-if="currentView === 'doubles_player'">搭档</th>
+                                                <th>{{ currentView === 'doubles_player' ? '对手组合' : '对手' }}</th>
                                                 <th>比分</th>
                                                 <th>结果</th>
                                                 <th>积分变化</th>
@@ -152,9 +150,14 @@
                                         <tbody>
                                             <tr v-for="match in selectedDetails.matches">
                                                 <td>{{ match.date }}</td>
-                                                <td>{{ match.opponent }}</td>
+                                                <td v-if="currentView === 'doubles_player'">{{ match.partner }}</td>
+                                                <td>{{ currentView === 'doubles_player' ? match.opponents : match.opponent }}</td>
                                                 <td>{{ match.score }}</td>
-                                                <td>{{ match.result }}</td>
+                                                <td>
+                                                    <span :class="match.result === '胜' ? 'text-success' : 'text-danger'">
+                                                        {{ match.result }}
+                                                    </span>
+                                                </td>
                                                 <td>
                                                     <span :class="match.ratingChange >= 0 ? 'text-success' : 'text-danger'">
                                                         {{ match.ratingChange >= 0 ? '+' : '' }}{{ match.ratingChange.toFixed(1) }}
@@ -187,12 +190,16 @@
                                 </h6>
                                 <div class="info-content">
                                     <div class="info-item">
-                                        <span class="info-label">开发时间：</span>
-                                        <span class="info-value">2025年2月3日</span>
+                                        <span class="info-label">版本：</span>
+                                        <span class="info-value">v1.1</span>
                                     </div>
                                     <div class="info-item">
-                                        <span class="info-label">开发工具：</span>
-                                        <span class="info-value">Cursor + Claude-3.5-Sonnet</span>
+                                        <span class="info-label">部署时间：</span>
+                                        <span class="info-value">2025/02/03</span>
+                                    </div>
+                                    <div class="info-item">
+                                        <span class="info-label">Composer AI：</span>
+                                        <span class="info-value">claude-3.5-sonnet</span>
                                     </div>
                                 </div>
                             </div>
