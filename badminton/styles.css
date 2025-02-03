@@ -126,4 +126,27 @@
 .bi {
     font-size: 1.1rem;
     vertical-align: -0.125em;
+}
+
+/* 图表容器样式 */
+#ratingChart {
+    background-color: white;
+    border-radius: 4px;
+    padding: 10px;
+}
+
+.card-body {
+    position: relative;
+}
+
+.chart-container {
+    position: relative;
+    height: 300px;
+    width: 100%;
+}
+
+#ratingChart {
+    background-color: white;
+    border-radius: 4px;
+    padding: 10px;
 } 
