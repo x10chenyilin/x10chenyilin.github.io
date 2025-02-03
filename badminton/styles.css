@@ -1,0 +1,129 @@
+.table th {
+    background-color: #f8f9fa;
+}
+
+.table tbody tr:hover {
+    background-color: #f5f5f5;
+}
+
+.modal-dialog {
+    max-width: 800px;
+}
+
+.card {
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+.btn-group {
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 5px;
+}
+
+.table-responsive {
+    box-shadow: 0 0 15px rgba(0,0,0,0.1);
+    border-radius: 4px;
+}
+
+/* 说明模态框样式 */
+#infoModal .modal-dialog {
+    max-width: 600px;
+}
+
+.info-section {
+    margin-bottom: 2rem;
+}
+
+.info-section:last-child {
+    margin-bottom: 0;
+}
+
+.info-section h6 {
+    color: #0d6efd;
+    font-size: 1.1rem;
+    margin-bottom: 1rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 2px solid #e9ecef;
+}
+
+.info-content {
+    padding-left: 1rem;
+}
+
+.info-item {
+    margin-bottom: 0.5rem;
+    display: flex;
+    align-items: baseline;
+}
+
+.info-label {
+    color: #6c757d;
+    min-width: 100px;
+}
+
+.info-value {
+    font-weight: 500;
+}
+
+.formula-box {
+    background-color: #f8f9fa;
+    border-radius: 8px;
+    padding: 1.5rem;
+    margin: 1rem 0;
+}
+
+.basic-info {
+    display: flex;
+    gap: 2rem;
+    margin-bottom: 1rem;
+    color: #495057;
+}
+
+.formula {
+    text-align: center;
+    margin: 1.5rem 0;
+    font-family: "Consolas", monospace;
+}
+
+.main-formula {
+    font-size: 1.2rem;
+    margin-bottom: 0.5rem;
+    color: #0d6efd;
+}
+
+.sub-formula {
+    color: #6610f2;
+}
+
+.formula-explain {
+    margin-top: 1rem;
+    color: #495057;
+}
+
+.formula-explain ul {
+    list-style-type: none;
+    padding-left: 1.5rem;
+    margin-top: 0.5rem;
+    columns: 2;
+}
+
+.formula-explain ul li {
+    margin-bottom: 0.3rem;
+    position: relative;
+}
+
+.formula-explain ul li:before {
+    content: "•";
+    color: #0d6efd;
+    position: absolute;
+    left: -1rem;
+}
+
+/* 图标样式 */
+.bi {
+    font-size: 1.1rem;
+    vertical-align: -0.125em;
+} 
