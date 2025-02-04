@@ -1,5 +1,58 @@
 .table th {
     background-color: #f8f9fa;
+    position: relative;
+    user-select: none;  /* 防止文字被选中 */
+    transition: background-color 0.2s;
+}
+
+/* 可排序的表头 */
+.table th.sortable {
+    padding-right: 25px !important;  /* 为排序图标留出空间 */
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+/* 当前排序列的样式 */
+.table th.active {
+    background-color: #e9ecef;
+    font-weight: bold;
+    color: #0d6efd;
+}
+
+.table th.sortable:hover {
+    background-color: #e9ecef;
+}
+
+/* 不可排序的表头 */
+.table th.no-sort {
+    background-color: #f8f9fa !important;
+    cursor: default;
+}
+
+/* 排序图标样式 */
+.table th i {
+    position: absolute;
+    right: 8px;
+    top: 50%;
+    transform: translateY(-50%);
+    opacity: 0.6;
+    transition: opacity 0.2s;
+}
+
+/* 当前排序列的图标样式 */
+.table th.active i {
+    opacity: 1;
+    color: #0d6efd;
+}
+
+/* 未选中列的图标样式 */
+.table th i.text-muted {
+    opacity: 0.3;
+}
+
+/* 鼠标悬停时的图标样式 */
+.table th.sortable:hover i {
+    opacity: 1;
 }
 
 .table tbody tr:hover {
@@ -232,6 +285,95 @@ tr:hover .medal-icon {
 }
 
 .icon-attribution a:hover {
+    color: #0d6efd;
+    border-bottom-color: #0d6efd;
+}
+
+/* 导航按钮组样式 */
+.nav-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: center;
+}
+
+.nav-btn {
+    flex: 1;
+    min-width: 120px;
+    max-width: 200px;
+    padding: 10px 15px;
+    border: 1px solid #0d6efd;
+    border-radius: 6px;
+    background-color: white;
+    color: #0d6efd;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.nav-btn:hover {
+    background-color: #f8f9fa;
+}
+
+.nav-btn.active {
+    background-color: #0d6efd;
+    color: white;
+}
+
+.nav-btn .btn-icon {
+    width: 20px;
+    height: 20px;
+    object-fit: contain;
+}
+
+.nav-btn span {
+    white-space: nowrap;
+}
+
+/* 在小屏幕上调整按钮大小 */
+@media (max-width: 576px) {
+    .nav-btn {
+        flex: 1 1 calc(33.333% - 10px);
+        min-width: 100px;
+        padding: 8px 12px;
+        font-size: 14px;
+    }
+    
+    .nav-btn .btn-icon {
+        width: 16px;
+        height: 16px;
+    }
+}
+
+/* 说明模态框底部信息样式 */
+.info-footer {
+    margin-top: 2rem;
+    padding-top: 1rem;
+    border-top: 1px solid #e9ecef;
+    text-align: center;
+    color: #6c757d;
+}
+
+.code-attribution {
+    margin-bottom: 0.5rem;
+}
+
+.icon-attribution {
+    margin-top: 0;
+    padding-top: 0;
+    border-top: none;
+}
+
+.info-footer a {
+    color: #6c757d;
+    text-decoration: none;
+    border-bottom: 1px dashed #6c757d;
+}
+
+.info-footer a:hover {
     color: #0d6efd;
     border-bottom-color: #0d6efd;
 } 

@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>羽毛球比赛统计</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
     <link href="styles.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14"></script>
 </head>
@@ -29,24 +30,27 @@
             </div>
 
             <!-- 导航按钮 -->
-            <div class="btn-group mb-4 w-100">
-                <button class="btn flex-grow-1" 
-                        :class="{'btn-primary': currentView === 'singles', 'btn-outline-primary': currentView !== 'singles'}"
+            <div class="nav-buttons mb-4">
+                <button class="nav-btn" 
+                        :class="{'active': currentView === 'singles'}"
                         @click="switchView('singles')">
                     <img :src="currentView === 'singles' ? 'icon/singles-selected.png' : 'icon/singles.png'" 
-                         alt="单打" class="btn-icon me-2">单打统计
+                         alt="单打" class="btn-icon">
+                    <span>单打统计</span>
                 </button>
-                <button class="btn flex-grow-1"
-                        :class="{'btn-primary': currentView === 'doubles_player', 'btn-outline-primary': currentView !== 'doubles_player'}"
+                <button class="nav-btn"
+                        :class="{'active': currentView === 'doubles_player'}"
                         @click="switchView('doubles_player')">
                     <img :src="currentView === 'doubles_player' ? 'icon/doubles-player-selected.png' : 'icon/doubles-player.png'" 
-                         alt="双打个人" class="btn-icon me-2">双打个人统计
+                         alt="双打个人" class="btn-icon">
+                    <span>双打个人统计</span>
                 </button>
-                <button class="btn flex-grow-1"
-                        :class="{'btn-primary': currentView === 'doubles_pair', 'btn-outline-primary': currentView !== 'doubles_pair'}"
+                <button class="nav-btn"
+                        :class="{'active': currentView === 'doubles_pair'}"
                         @click="switchView('doubles_pair')">
                     <img :src="currentView === 'doubles_pair' ? 'icon/doubles-group-selected.png' : 'icon/doubles-group.png'" 
-                         alt="双打组合" class="btn-icon me-2">双打组合统计
+                         alt="双打组合" class="btn-icon">
+                    <span>双打组合统计</span>
                 </button>
             </div>
 
@@ -55,21 +59,56 @@
                 <table class="table text-center">
                     <thead>
                         <tr>
-                            <th>排名</th>
-                            <th>{{ currentView === 'doubles_pair' ? '组合' : '选手' }}</th>
-                            <th>场次</th>
-                            <th>胜场</th>
-                            <th>胜率</th>
-                            <th v-if="currentView !== 'doubles_player'">积分</th>
+                            <th class="no-sort">
+                                {{ currentView === 'doubles_player' ? '胜率排名' : '积分排名' }}
+                            </th>
+                            <th class="no-sort">{{ currentView === 'doubles_pair' ? '组合' : '选手' }}</th>
+                            <th @click="changeSort('matches')" 
+                                :class="['sortable', sortKey === 'matches' ? 'active' : '']">
+                                场次
+                                <i :class="['bi', 
+                                    sortKey === 'matches' ? 
+                                        (sortOrder === 'asc' ? 'bi-sort-numeric-down' : 'bi-sort-numeric-up') : 
+                                        'bi-arrow-down-up text-muted']">
+                                </i>
+                            </th>
+                            <th @click="changeSort('wins')" 
+                                :class="['sortable', sortKey === 'wins' ? 'active' : '']">
+                                胜场
+                                <i :class="['bi', 
+                                    sortKey === 'wins' ? 
+                                        (sortOrder === 'asc' ? 'bi-sort-numeric-down' : 'bi-sort-numeric-up') : 
+                                        'bi-arrow-down-up text-muted']">
+                                </i>
+                            </th>
+                            <th @click="changeSort('win_rate')" 
+                                :class="['sortable', sortKey === 'win_rate' ? 'active' : '']">
+                                胜率
+                                <i :class="['bi', 
+                                    sortKey === 'win_rate' ? 
+                                        (sortOrder === 'asc' ? 'bi-sort-numeric-down' : 'bi-sort-numeric-up') : 
+                                        'bi-arrow-down-up text-muted']">
+                                </i>
+                            </th>
+                            <th v-if="currentView !== 'doubles_player'" 
+                                @click="changeSort('rating')" 
+                                :class="['sortable', sortKey === 'rating' ? 'active' : '']">
+                                积分
+                                <i :class="['bi', 
+                                    sortKey === 'rating' ? 
+                                        (sortOrder === 'asc' ? 'bi-sort-numeric-down' : 'bi-sort-numeric-up') : 
+                                        'bi-arrow-down-up text-muted']">
+                                </i>
+                            </th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr v-for="(item, index) in sortedStats" @click="showDetails(item)" style="cursor: pointer">
                             <td>
-                                <img v-if="index === 0" src="icon/gold.png" alt="金牌" class="medal-icon">
-                                <img v-else-if="index === 1" src="icon/silver.png" alt="银牌" class="medal-icon">
-                                <img v-else-if="index === 2" src="icon/bronze.png" alt="铜牌" class="medal-icon">
-                                <span v-else>{{ index + 1 }}</span>
+                                <img v-if="item.ratingRank === 1" src="icon/gold.png" alt="金牌" class="medal-icon">
+                                <img v-else-if="item.ratingRank === 2" src="icon/silver.png" alt="银牌" class="medal-icon">
+                                <img v-else-if="item.ratingRank === 3" src="icon/bronze.png" alt="铜牌" class="medal-icon">
+                                <span v-else>{{ item.ratingRank }}</span>
                             </td>
                             <td>{{ formatName(item.name) }}</td>
                             <td>{{ item.matches }}</td>
@@ -127,15 +166,41 @@
                                     <table class="table text-center">
                                         <thead>
                                             <tr>
-                                                <th>{{ currentView === 'doubles_player' ? '搭档' : '对手' }}</th>
-                                                <th>场次</th>
-                                                <th>胜场</th>
-                                                <th>胜率</th>
+                                                <th class="no-sort">
+                                                    {{ currentView === 'doubles_player' ? '搭档' : '对手' }}
+                                                </th>
+                                                <th @click="changeDetailsSort('matches')" 
+                                                    :class="['sortable', detailsSortKey === 'matches' ? 'active' : '']">
+                                                    场次
+                                                    <i :class="['bi', 
+                                                        detailsSortKey === 'matches' ? 
+                                                            (detailsSortOrder === 'asc' ? 'bi-sort-numeric-down' : 'bi-sort-numeric-up') : 
+                                                            'bi-arrow-down-up text-muted']">
+                                                    </i>
+                                                </th>
+                                                <th @click="changeDetailsSort('wins')" 
+                                                    :class="['sortable', detailsSortKey === 'wins' ? 'active' : '']">
+                                                    胜场
+                                                    <i :class="['bi', 
+                                                        detailsSortKey === 'wins' ? 
+                                                            (detailsSortOrder === 'asc' ? 'bi-sort-numeric-down' : 'bi-sort-numeric-up') : 
+                                                            'bi-arrow-down-up text-muted']">
+                                                    </i>
+                                                </th>
+                                                <th @click="changeDetailsSort('win_rate')" 
+                                                    :class="['sortable', detailsSortKey === 'win_rate' ? 'active' : '']">
+                                                    胜率
+                                                    <i :class="['bi', 
+                                                        detailsSortKey === 'win_rate' ? 
+                                                            (detailsSortOrder === 'asc' ? 'bi-sort-numeric-down' : 'bi-sort-numeric-up') : 
+                                                            'bi-arrow-down-up text-muted']">
+                                                    </i>
+                                                </th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr v-for="(stat, name) in selectedDetails.opponents || selectedDetails.partners">
-                                                <td>{{ formatName(name) }}</td>
+                                            <tr v-for="stat in sortedDetailsStats">
+                                                <td>{{ formatName(stat.name) }}</td>
                                                 <td>{{ stat.matches }}</td>
                                                 <td>{{ stat.wins }}</td>
                                                 <td>{{ formatPercentage((stat.wins / stat.matches) * 100) }}</td>
@@ -197,73 +262,72 @@
                             <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                         </div>
                         <div class="modal-body">
+                            <!-- 积分计算说明 -->
                             <div class="info-section">
-                                <h6>
-                                    <i class="bi bi-calendar3 me-2"></i>开发信息
-                                </h6>
+                                <h6>积分计算说明</h6>
                                 <div class="info-content">
-                                    <div class="info-item">
-                                        <span class="info-label">版本：</span>
-                                        <span class="info-value">v1.1.2</span>
-                                    </div>
-                                    <div class="info-item">
-                                        <span class="info-label">部署时间：</span>
-                                        <span class="info-value">2025/02/04</span>
-                                    </div>
-                                    <div class="info-item">
-                                        <span class="info-label">Composer AI：</span>
-                                        <span class="info-value">claude-3.5-sonnet</span>
-                                    </div>
-                                </div>
-                            </div>
-                            
-                            <div class="info-section">
-                                <h6>
-                                    <i class="bi bi-graph-up me-2"></i>积分计算方法
-                                </h6>
-                                <div class="info-content">
-                                    <p class="mb-2">使用ELO积分系统：</p>
-                                    <div class="formula-box">
-                                        <div class="basic-info">
-                                            <div>初始积分：1000分</div>
-                                            <div>K因子：32（积分变化幅度）</div>
+                                    <div class="basic-info">
+                                        <div>
+                                            <div class="info-item">
+                                                <span class="info-label">初始积分：</span>
+                                                <span class="info-value">1000</span>
+                                            </div>
+                                            <div class="info-item">
+                                                <span class="info-label">K因子：</span>
+                                                <span class="info-value">32</span>
+                                            </div>
                                         </div>
+                                    </div>
+                                    <div class="formula-box">
                                         <div class="formula">
-                                            <div class="main-formula">R'a = Ra + K(Sa - Ea)</div>
-                                            <div class="sub-formula">Ea = 1 / (1 + 10^((Rb-Ra)/400))</div>
+                                            <div class="main-formula">R' = R + K × (S - E)</div>
+                                            <div class="sub-formula">E = 1 / (1 + 10^((Ro-R)/400))</div>
                                         </div>
                                         <div class="formula-explain">
-                                            <div>其中：</div>
+                                            <p>其中：</p>
                                             <ul>
-                                                <li>R'a：新积分</li>
-                                                <li>Ra：原积分</li>
-                                                <li>Sa：实际得分（胜=1，负=0）</li>
-                                                <li>Ea：预期得分</li>
-                                                <li>Rb：对手积分</li>
+                                                <li>R' 是新积分</li>
+                                                <li>R 是原积分</li>
+                                                <li>K 是变化系数</li>
+                                                <li>S 是得分（胜为1，负为0）</li>
+                                                <li>E 是预期得分</li>
+                                                <li>Ro 是对手积分</li>
                                             </ul>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            
+
+                            <!-- 数据说明 -->
                             <div class="info-section">
-                                <h6>
-                                    <i class="bi bi-clock-history me-2"></i>数据信息
-                                </h6>
+                                <h6>数据说明</h6>
+                                <div class="info-content">
+                                    <p>数据统计截止：{{ lastMatchDate }}</p>
+                                </div>
+                            </div>
+
+                            <!-- 版本信息 -->
+                            <div class="info-section">
+                                <h6>版本信息</h6>
                                 <div class="info-content">
                                     <div class="info-item">
-                                        <span class="info-label">（测试数据与现实无关）数据截止日期：</span>
-                                        <span class="info-value">{{ lastMatchDate }}</span>
+                                        <span class="info-label">版本：</span>
+                                        <span class="info-value">v1.2.1</span>
+                                    </div>
+                                    <div class="info-item">
+                                        <span class="info-label">部署时间：</span>
+                                        <span class="info-value">2025/02/04</span>
                                     </div>
                                 </div>
                             </div>
 
-                            <!-- 添加图标来源信息 -->
-                            <div class="info-section icon-attribution">
-                                <div class="info-content text-center text-muted">
-                                    <small>
-                                        Icons by <a href="https://www.flaticon.com/uicons" target="_blank" rel="noopener noreferrer">Flaticon</a>
-                                    </small>
+                            <!-- 底部信息 -->
+                            <div class="info-footer">
+                                <div class="code-attribution">
+                                    Code by claude-3.5-sonnet
+                                </div>
+                                <div class="icon-attribution">
+                                    Icon by <a href="https://www.flaticon.com/authors/freepik" target="_blank">Freepik</a>
                                 </div>
                             </div>
                         </div>

@@ -29,12 +29,103 @@ new Vue({
         },
         isLoading: true,
         infoModal: null,
+        // 主表格排序
+        sortKey: 'rating',  // 默认按积分排序（单打和双打组合）
+        sortOrder: 'desc',  // 默认降序
+        // 详情表格排序
+        detailsSortKey: 'win_rate',  // 默认按胜率排序
+        detailsSortOrder: 'desc',    // 默认降序
+    },
+    watch: {
+        // 添加对currentView的监听
+        currentView(newView) {
+            // 切换视图时更新默认排序键
+            this.sortKey = newView === 'doubles_player' ? 'win_rate' : 'rating';
+            this.sortOrder = 'desc';
+        }
     },
     computed: {
         sortedStats() {
             // 根据当前视图返回排序后的统计数据
             const stats = this.calculateStats();
-            return this.sortStats(stats);
+            const statsArray = Object.values(stats);
+            
+            // 计算排名（根据视图类型使用不同的排序规则）
+            const rankedArray = [...statsArray].sort((a, b) => {
+                if (this.currentView === 'doubles_player') {
+                    // 双打个人统计：胜率 > 胜场 > 场次 > 姓名
+                    return b.win_rate - a.win_rate || 
+                           b.wins - a.wins || 
+                           b.matches - a.matches || 
+                           this.formatName(a.name).localeCompare(this.formatName(b.name));
+                } else {
+                    // 单打和双打组合：积分 > 胜率 > 胜场 > 场次 > 姓名
+                    return b.rating - a.rating || 
+                           b.win_rate - a.win_rate || 
+                           b.wins - a.wins || 
+                           b.matches - a.matches || 
+                           this.formatName(a.name).localeCompare(this.formatName(b.name));
+                }
+            });
+            
+            // 为每个项目添加排名
+            rankedArray.forEach((item, index) => {
+                item.ratingRank = index + 1;  // 实际上现在是综合排名，不仅仅是积分排名
+            });
+            
+            // 如果当前排序键不是默认排序，则按选择的键重新排序
+            const defaultKey = this.currentView === 'doubles_player' ? 'win_rate' : 'rating';
+            if (this.sortKey !== defaultKey || this.sortOrder !== 'desc') {
+                return statsArray.sort((a, b) => {
+                    // 首先按主排序键排序
+                    let compareA = a[this.sortKey];
+                    let compareB = b[this.sortKey];
+                    let result = 0;
+                    
+                    // 根据排序顺序比较
+                    if (this.sortOrder === 'asc') {
+                        result = compareA > compareB ? 1 : compareA < compareB ? -1 : 0;
+                    } else {
+                        result = compareA < compareB ? 1 : compareA > compareB ? -1 : 0;
+                    }
+                    
+                    // 如果主排序键相等，则按照次要排序键依次排序
+                    if (result === 0) {
+                        if (this.currentView === 'doubles_player') {
+                            // 双打个人统计：胜率 > 胜场 > 场次 > 姓名
+                            result = b.win_rate - a.win_rate;
+                            if (result === 0) {
+                                result = b.wins - a.wins;
+                                if (result === 0) {
+                                    result = b.matches - a.matches;
+                                    if (result === 0) {
+                                        result = this.formatName(a.name).localeCompare(this.formatName(b.name));
+                                    }
+                                }
+                            }
+                        } else {
+                            // 单打和双打组合：积分 > 胜率 > 胜场 > 场次 > 姓名
+                            result = b.rating - a.rating;
+                            if (result === 0) {
+                                result = b.win_rate - a.win_rate;
+                                if (result === 0) {
+                                    result = b.wins - a.wins;
+                                    if (result === 0) {
+                                        result = b.matches - a.matches;
+                                        if (result === 0) {
+                                            result = this.formatName(a.name).localeCompare(this.formatName(b.name));
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    
+                    return result;
+                });
+            }
+            
+            return rankedArray;
         },
         detailsTitle() {
             if (!this.selectedDetails) return '';
@@ -65,6 +156,51 @@ new Vue({
             return lastDate.getFullYear() + '年' + 
                    (lastDate.getMonth() + 1) + '月' + 
                    lastDate.getDate() + '日';
+        },
+        // 添加详情表格排序计算属性
+        sortedDetailsStats() {
+            const stats = this.selectedDetails.opponents || this.selectedDetails.partners;
+            if (!stats) return {};
+            
+            // 将对象转换为数组并添加计算属性
+            const statsArray = Object.entries(stats).map(([name, data]) => ({
+                name: name,  // 确保正确赋值姓名
+                matches: data.matches,
+                wins: data.wins,
+                win_rate: (data.wins / data.matches) * 100
+            }));
+            
+            // 排序
+            return statsArray.sort((a, b) => {
+                let result = 0;
+                
+                // 首先按主排序键排序
+                const compareA = a[this.detailsSortKey];
+                const compareB = b[this.detailsSortKey];
+                
+                if (this.detailsSortOrder === 'asc') {
+                    result = compareA > compareB ? 1 : compareA < compareB ? -1 : 0;
+                } else {
+                    result = compareA < compareB ? 1 : compareA > compareB ? -1 : 0;
+                }
+                
+                // 如果主排序键相等，按次要排序键排序
+                if (result === 0) {
+                    // 胜率 > 场次 > 胜场 > 姓名
+                    result = b.win_rate - a.win_rate;
+                    if (result === 0) {
+                        result = b.matches - a.matches;
+                        if (result === 0) {
+                            result = b.wins - a.wins;
+                            if (result === 0) {
+                                result = this.formatName(a.name).localeCompare(this.formatName(b.name));
+                            }
+                        }
+                    }
+                }
+                
+                return result;
+            });
         }
     },
     methods: {
@@ -191,6 +327,10 @@ new Vue({
         },
         showDetails(item) {
             this.selectedDetails = this.calculateDetails(item);
+            // 重置详情表格排序为默认值
+            this.detailsSortKey = 'win_rate';
+            this.detailsSortOrder = 'desc';
+            
             const modalElement = document.getElementById('detailsModal');
             if (modalElement && !this.detailsModal) {
                 this.detailsModal = new bootstrap.Modal(modalElement);
@@ -645,6 +785,26 @@ new Vue({
                 singles: singlesHistory,
                 doubles: doublesHistory
             };
+        },
+        // 添加排序方法
+        changeSort(key) {
+            // 如果点击的是当前排序键，则切换排序顺序
+            if (this.sortKey === key) {
+                this.sortOrder = this.sortOrder === 'asc' ? 'desc' : 'asc';
+            } else {
+                // 如果是新的排序键，设置为降序
+                this.sortKey = key;
+                this.sortOrder = 'desc';
+            }
+        },
+        // 添加详情表格排序方法
+        changeDetailsSort(key) {
+            if (this.detailsSortKey === key) {
+                this.detailsSortOrder = this.detailsSortOrder === 'asc' ? 'desc' : 'asc';
+            } else {
+                this.detailsSortKey = key;
+                this.detailsSortOrder = 'desc';
+            }
         }
     },
     async mounted() {
