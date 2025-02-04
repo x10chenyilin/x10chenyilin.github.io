@@ -20,25 +20,33 @@
 
         <!-- 主要内容，只在数据加载完成后显示 -->
         <template v-else>
+            <!-- 说明按钮 -->
+            <div class="text-end mb-3">
+                <button class="btn btn-link text-muted" @click="showInfo">
+                    <img src="icon/info.png" alt="说明" class="btn-icon" style="opacity: 0.6">
+                    <small>说明</small>
+                </button>
+            </div>
+
             <!-- 导航按钮 -->
-            <div class="btn-group mb-4">
-                <button class="btn" 
+            <div class="btn-group mb-4 w-100">
+                <button class="btn flex-grow-1" 
                         :class="{'btn-primary': currentView === 'singles', 'btn-outline-primary': currentView !== 'singles'}"
                         @click="switchView('singles')">
-                    单打统计
+                    <img :src="currentView === 'singles' ? 'icon/singles-selected.png' : 'icon/singles.png'" 
+                         alt="单打" class="btn-icon me-2">单打统计
                 </button>
-                <button class="btn"
+                <button class="btn flex-grow-1"
                         :class="{'btn-primary': currentView === 'doubles_player', 'btn-outline-primary': currentView !== 'doubles_player'}"
                         @click="switchView('doubles_player')">
-                    双打个人统计
+                    <img :src="currentView === 'doubles_player' ? 'icon/doubles-player-selected.png' : 'icon/doubles-player.png'" 
+                         alt="双打个人" class="btn-icon me-2">双打个人统计
                 </button>
-                <button class="btn"
+                <button class="btn flex-grow-1"
                         :class="{'btn-primary': currentView === 'doubles_pair', 'btn-outline-primary': currentView !== 'doubles_pair'}"
                         @click="switchView('doubles_pair')">
-                    双打组合统计
-                </button>
-                <button class="btn btn-info ms-auto" @click="showInfo">
-                    说明
+                    <img :src="currentView === 'doubles_pair' ? 'icon/doubles-group-selected.png' : 'icon/doubles-group.png'" 
+                         alt="双打组合" class="btn-icon me-2">双打组合统计
                 </button>
             </div>
 
@@ -57,7 +65,12 @@
                     </thead>
                     <tbody>
                         <tr v-for="(item, index) in sortedStats" @click="showDetails(item)" style="cursor: pointer">
-                            <td>{{ index + 1 }}</td>
+                            <td>
+                                <img v-if="index === 0" src="icon/gold.png" alt="金牌" class="medal-icon">
+                                <img v-else-if="index === 1" src="icon/silver.png" alt="银牌" class="medal-icon">
+                                <img v-else-if="index === 2" src="icon/bronze.png" alt="铜牌" class="medal-icon">
+                                <span v-else>{{ index + 1 }}</span>
+                            </td>
                             <td>{{ formatName(item.name) }}</td>
                             <td>{{ item.matches }}</td>
                             <td>{{ item.wins }}</td>
@@ -191,11 +204,11 @@
                                 <div class="info-content">
                                     <div class="info-item">
                                         <span class="info-label">版本：</span>
-                                        <span class="info-value">v1.1</span>
+                                        <span class="info-value">v1.1.2</span>
                                     </div>
                                     <div class="info-item">
                                         <span class="info-label">部署时间：</span>
-                                        <span class="info-value">2025/02/03</span>
+                                        <span class="info-value">2025/02/04</span>
                                     </div>
                                     <div class="info-item">
                                         <span class="info-label">Composer AI：</span>
@@ -239,9 +252,18 @@
                                 </h6>
                                 <div class="info-content">
                                     <div class="info-item">
-                                        <span class="info-label">数据截止日期：</span>
+                                        <span class="info-label">（测试数据与现实无关）数据截止日期：</span>
                                         <span class="info-value">{{ lastMatchDate }}</span>
                                     </div>
+                                </div>
+                            </div>
+
+                            <!-- 添加图标来源信息 -->
+                            <div class="info-section icon-attribution">
+                                <div class="info-content text-center text-muted">
+                                    <small>
+                                        Icons by <a href="https://www.flaticon.com/uicons" target="_blank" rel="noopener noreferrer">Flaticon</a>
+                                    </small>
                                 </div>
                             </div>
                         </div>

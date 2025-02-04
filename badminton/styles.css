@@ -149,4 +149,89 @@
     background-color: white;
     border-radius: 4px;
     padding: 10px;
+}
+
+/* 按钮图标样式 */
+.btn-icon {
+    width: 20px;
+    height: 20px;
+    vertical-align: text-bottom;
+    filter: brightness(1);
+    transition: filter 0.2s;
+}
+
+/* 当按钮处于激活状态时，调整图标亮度 */
+.btn-primary .btn-icon {
+    filter: brightness(2);  /* 使图标在深色背景下更亮 */
+}
+
+/* 当按钮处于hover状态时的图标效果 */
+.btn:hover .btn-icon {
+    filter: brightness(1.5);
+}
+
+/* 排行榜前三名样式 */
+.table-responsive > .table > tbody > tr:nth-child(1) {
+    background-color: rgba(255, 215, 0, 0.15) !important;  /* 金色 */
+}
+
+.table-responsive > .table > tbody > tr:nth-child(2) {
+    background-color: rgba(192, 192, 192, 0.15) !important;  /* 银色 */
+}
+
+.table-responsive > .table > tbody > tr:nth-child(3) {
+    background-color: rgba(205, 127, 50, 0.15) !important;  /* 铜色 */
+}
+
+/* 鼠标悬停效果加强 */
+.table-responsive > .table > tbody > tr:nth-child(1):hover {
+    background-color: rgba(255, 215, 0, 0.25) !important;
+}
+
+.table-responsive > .table > tbody > tr:nth-child(2):hover {
+    background-color: rgba(192, 192, 192, 0.25) !important;
+}
+
+.table-responsive > .table > tbody > tr:nth-child(3):hover {
+    background-color: rgba(205, 127, 50, 0.25) !important;
+}
+
+/* 奖牌图标样式 */
+.medal-icon {
+    width: 24px;
+    height: 24px;
+    vertical-align: middle;
+    margin-top: -3px;
+    /* 添加描边效果 */
+    filter: drop-shadow(0 0 1px white) 
+            drop-shadow(0 0 1px white) 
+            drop-shadow(0 0 1px white);
+    /* 添加平滑过渡效果 */
+    transition: transform 0.2s ease, filter 0.2s ease;
+}
+
+/* 鼠标悬停时的效果 */
+tr:hover .medal-icon {
+    transform: scale(1.1);
+    filter: drop-shadow(0 0 2px white) 
+            drop-shadow(0 0 2px white) 
+            drop-shadow(0 0 2px white);
+}
+
+/* 图标来源信息样式 */
+.icon-attribution {
+    margin-top: 2rem;
+    padding-top: 1rem;
+    border-top: 1px solid #e9ecef;
+}
+
+.icon-attribution a {
+    color: #6c757d;
+    text-decoration: none;
+    border-bottom: 1px dashed #6c757d;
+}
+
+.icon-attribution a:hover {
+    color: #0d6efd;
+    border-bottom-color: #0d6efd;
 } 
