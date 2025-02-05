@@ -266,32 +266,25 @@
                             <div class="info-section">
                                 <h6>积分计算说明</h6>
                                 <div class="info-content">
-                                    <div class="basic-info">
-                                        <div>
-                                            <div class="info-item">
-                                                <span class="info-label">初始积分：</span>
-                                                <span class="info-value">1000</span>
-                                            </div>
-                                            <div class="info-item">
-                                                <span class="info-label">K因子：</span>
-                                                <span class="info-value">32</span>
-                                            </div>
-                                        </div>
+                                    <div class="info-content">
+                                        使用Elo积分系统计算积分，新球员/组合的初始积分为1000。
                                     </div>
                                     <div class="formula-box">
+                                        <div class="formula-explain">
+                                            <p>积分更新公式：</p>
+                                        </div>
                                         <div class="formula">
-                                            <div class="main-formula">R' = R + K × (S - E)</div>
-                                            <div class="sub-formula">E = 1 / (1 + 10^((Ro-R)/400))</div>
+                                            <img src="img/elo-formula.png" alt="Elo积分更新公式" class="formula-img">
                                         </div>
                                         <div class="formula-explain">
                                             <p>其中：</p>
                                             <ul>
-                                                <li>R' 是新积分</li>
-                                                <li>R 是原积分</li>
-                                                <li>K 是变化系数</li>
-                                                <li>S 是得分（胜为1，负为0）</li>
-                                                <li>E 是预期得分</li>
-                                                <li>Ro 是对手积分</li>
+                                                <li>R'：新积分</li>
+                                                <li>R：原积分</li>
+                                                <li>Ro：对手积分</li>
+                                                <li>S：得分（胜为1，负为0）</li>
+                                                <li>E：预期得分</li>
+                                                <li>K：变化系数（取32）</li>
                                             </ul>
                                         </div>
                                     </div>
@@ -312,11 +305,11 @@
                                 <div class="info-content">
                                     <div class="info-item">
                                         <span class="info-label">版本：</span>
-                                        <span class="info-value">v1.2.1</span>
+                                        <span class="info-value">v1.2.2</span>
                                     </div>
                                     <div class="info-item">
                                         <span class="info-label">部署时间：</span>
-                                        <span class="info-value">2025/02/04</span>
+                                        <span class="info-value">2025/02/05</span>
                                     </div>
                                 </div>
                             </div>

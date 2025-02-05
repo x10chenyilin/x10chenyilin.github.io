@@ -88,91 +88,144 @@
 
 .info-section {
     margin-bottom: 2rem;
+    padding: 1.5rem;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    transition: all 0.3s ease;
 }
 
-.info-section:last-child {
-    margin-bottom: 0;
+.info-section:hover {
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    transform: translateY(-2px);
 }
 
 .info-section h6 {
     color: #0d6efd;
     font-size: 1.1rem;
-    margin-bottom: 1rem;
-    padding-bottom: 0.5rem;
+    margin-bottom: 1.2rem;
+    padding-bottom: 0.8rem;
     border-bottom: 2px solid #e9ecef;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.info-section h6::before {
+    content: "";
+    display: inline-block;
+    width: 4px;
+    height: 1.1rem;
+    background-color: #0d6efd;
+    border-radius: 2px;
 }
 
 .info-content {
-    padding-left: 1rem;
+    color: #495057;
 }
 
 .info-item {
-    margin-bottom: 0.5rem;
+    margin-bottom: 0.8rem;
     display: flex;
     align-items: baseline;
+    gap: 0.5rem;
 }
 
 .info-label {
     color: #6c757d;
     min-width: 100px;
+    position: relative;
+}
+
+.info-label::after {
+    content: "：";
+    position: absolute;
+    right: 0;
 }
 
 .info-value {
     font-weight: 500;
+    color: #212529;
 }
 
-.formula-box {
-    background-color: #f8f9fa;
-    border-radius: 8px;
-    padding: 1.5rem;
-    margin: 1rem 0;
-}
-
-.basic-info {
-    display: flex;
-    gap: 2rem;
-    margin-bottom: 1rem;
-    color: #495057;
+.formula-img {
+    max-width: 50%;
+    height: auto;
+    margin: 1rem auto;
+    display: block;
 }
 
 .formula {
     text-align: center;
-    margin: 1.5rem 0;
-    font-family: "Consolas", monospace;
+    margin: 1rem 0;
+}
+
+.formula-box {
+    background: linear-gradient(145deg, #f8f9fa 0%, #ffffff 100%);
+    border-radius: 12px;
+    padding: 2rem;
+    margin: 1.5rem auto;
+    max-width: 500px;
+    width: 100%;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+    border: 1px solid #e9ecef;
+}
+
+.basic-info {
+    display: flex;
+    justify-content: center;
+    gap: 3rem;
+    margin-bottom: 1.5rem;
+    color: #495057;
+    font-size: 0.95rem;
 }
 
 .main-formula {
-    font-size: 1.2rem;
-    margin-bottom: 0.5rem;
+    font-size: 1.4rem;
+    margin-bottom: 1rem;
     color: #0d6efd;
+    font-weight: 500;
+    letter-spacing: 1px;
 }
 
 .sub-formula {
+    font-size: 1.1rem;
     color: #6610f2;
+    opacity: 0.9;
 }
 
 .formula-explain {
-    margin-top: 1rem;
     color: #495057;
+}
+
+.formula-explain p {
+    margin-bottom: 0.8rem;
+    color: #6c757d;
 }
 
 .formula-explain ul {
     list-style-type: none;
-    padding-left: 1.5rem;
-    margin-top: 0.5rem;
+    padding: 0;
+    margin: 0;
     columns: 2;
+    column-gap: 0.5rem;
+    display: inline-block;
+    text-align: left;
 }
 
 .formula-explain ul li {
-    margin-bottom: 0.3rem;
+    margin-bottom: 0.5rem;
+    padding-left: 1rem;
     position: relative;
+    break-inside: avoid;
 }
 
-.formula-explain ul li:before {
+.formula-explain ul li::before {
     content: "•";
     color: #0d6efd;
     position: absolute;
-    left: -1rem;
+    left: 0rem;
+    font-weight: bold;
 }
 
 /* 图标样式 */
@@ -350,27 +403,34 @@ tr:hover .medal-icon {
 
 /* 说明模态框底部信息样式 */
 .info-footer {
-    margin-top: 2rem;
-    padding-top: 1rem;
+    margin-top: 2.5rem;
+    padding-top: 1.2rem;
     border-top: 1px solid #e9ecef;
     text-align: center;
     color: #6c757d;
+    background: linear-gradient(to bottom, transparent, #f8f9fa);
+    border-radius: 0 0 8px 8px;
 }
 
 .code-attribution {
-    margin-bottom: 0.5rem;
+    margin-bottom: 0.6rem;
+    font-size: 0.9rem;
+    opacity: 0.9;
 }
 
 .icon-attribution {
     margin-top: 0;
     padding-top: 0;
     border-top: none;
+    font-size: 0.9rem;
+    opacity: 0.9;
 }
 
 .info-footer a {
     color: #6c757d;
     text-decoration: none;
     border-bottom: 1px dashed #6c757d;
+    transition: all 0.2s ease;
 }
 
 .info-footer a:hover {
