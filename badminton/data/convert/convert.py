@@ -13,10 +13,11 @@ Dictionary = {
     "tm": "汤晨曦",
     "mpy": "马培原",
     "zx": "张迅",
-    "dtz": "丁铁铮"
+    "dtz": "丁铁铮",
+    "chd":"陈灏丹"
 }
 
-date = "2025/3/11"
+date = "2025/3/13"
 
 def convert(line):
 

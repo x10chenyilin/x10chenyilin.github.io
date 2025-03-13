@@ -1,13 +1,11 @@
-1. cyl 15:7 jjr
-2. cyl yz 21:14 mkx mpy
-3. lzj zx 23:21 mpy lyj
-4. cyl jjr 21:11 xzg yz
-5. lzk mkx 21:19 zx lyj
-6. xzg mpy 22：20 jjr lzj
-7. lyj yz 21:16 lzk zx
-8. lzz lzj 21:15 xzg cyl
-9. mpy jjr 19：21 yz mkx
-10. lyj lzk 21:15 zx xzg
-11. cyl lzj 21:18 lzz yz
-12. lzz mpy 21：19 xzg zx
-13. cyl jjr 21:19 lzk lyj
+1. cyl 21:17 lzj
+2. xzg 21:14 chd
+3. cyl 21:18 xzg
+4. xzg 21：4 yz
+5. yz lzj 17:21 xzg mkx
+6. cyl 21:10 lyj
+7. lzj 21:19 chd
+8. lyj yz 23:21 cyl mkx
+9. cyl 21:9 lzj
+10. lyj yz 21:14 chd mkx
+11. cyl lzj 21:13 lyj yz
