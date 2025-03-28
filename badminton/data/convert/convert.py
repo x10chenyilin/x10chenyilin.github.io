@@ -1,6 +1,7 @@
 Dictionary = {
     "cyl": "陈毅麟",
     "jjr": "姜佳楉",
+    "jj": "姜佳楉",
     "lzz": "林知之",
     "czr": "陈泽睿",
     "lyj": "李宇杰",
@@ -20,7 +21,7 @@ Dictionary = {
     "czr2":"陈泽睿（半场）"
 }
 
-date = "2025/3/25"
+date = "2025/3/28"
 
 def convert(line):
 
