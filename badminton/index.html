@@ -54,6 +54,16 @@
                 </button>
             </div>
 
+            <!-- 添加显示选项 -->
+            <div v-if="currentView === 'doubles_player'" class="mb-3">
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" v-model="showLessThan10Matches" id="showLessThan10Matches">
+                    <label class="form-check-label" for="showLessThan10Matches">
+                        显示比赛次数少于10场的选手
+                    </label>
+                </div>
+            </div>
+
             <!-- 主数据表格 -->
             <div class="table-responsive">
                 <table class="table text-center">

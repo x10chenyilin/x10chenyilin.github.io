@@ -35,6 +35,8 @@ new Vue({
         // 详情表格排序
         detailsSortKey: 'win_rate',  // 默认按胜率排序
         detailsSortOrder: 'desc',    // 默认降序
+        // 是否显示比赛次数少于10场的选手
+        showLessThan10Matches: false
     },
     watch: {
         // 添加对currentView的监听
@@ -48,7 +50,12 @@ new Vue({
         sortedStats() {
             // 根据当前视图返回排序后的统计数据
             const stats = this.calculateStats();
-            const statsArray = Object.values(stats);
+            let statsArray = Object.values(stats);
+            
+            // 如果是双打个人统计且不显示少于10场的选手，则过滤数据
+            if (this.currentView === 'doubles_player' && !this.showLessThan10Matches) {
+                statsArray = statsArray.filter(item => item.matches >= 10);
+            }
             
             // 计算排名（根据视图类型使用不同的排序规则）
             const rankedArray = [...statsArray].sort((a, b) => {
