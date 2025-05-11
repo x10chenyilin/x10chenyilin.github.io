@@ -20,10 +20,11 @@ Dictionary = {
     "lzz2":"林知之（左手）",
     "czr2":"陈泽睿（半场）",
     "zjy":"赵泾源",
-    "zhj":"张颢继"
+    "zhj":"张颢继",
+    "sjc":"石谨诚"
 }
 
-date = "2025/5/10"
+date = "2025/5/11"
 
 def convert(line):
 
