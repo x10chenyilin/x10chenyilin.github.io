@@ -1,7 +1,7 @@
-1. lzk tcx 21：19 lzz yz
-2. lzk yz 21：18 lzz tcx
-3. sjc lzk 21：14 xzg yz
-4. lzz tcx 21：12 xzg sjc
-5. lzk sjc 22：20 xzg tcx
-6. lzz xzg 21：12 lzk yz
-7. lzz yz 21：12 lzk xzg
+1. lzz jjr 21：19 lyj mpy
+2. cyl mpy 21：11 lyj zx
+3. cyl zx 21：14 lyj mpy
+4. lzz jjr 21：17 cyl lyj
+5. lzz lyj 21：8 cyl jjr
+6. cyl zx 21：10 lyj mpy
+7. lyj 21:2 mpy
